@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  # ----------------------------------------------------------------------------
+  # PostGIS Spatial Database
+  # ----------------------------------------------------------------------------
+  db:
+    image: postgis/postgis:16-3.4
+    container_name: urbanflood_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: ${POSTGRES_DB:-urbanflood_db}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgis_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ----------------------------------------------------------------------------
+  # FastAPI Backend Service
+  # ----------------------------------------------------------------------------
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: urbanflood_backend
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - ENVIRONMENT=production
+      - DEBUG=false
+      - DATABASE_URL=postgresql+asyncpg://postgres:postgres@db:5432/urbanflood_db
+      - MODEL_PATH=/app/ai/models/saved/xgboost_flood_model_latest.joblib
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./ai/models/saved:/app/ai/models/saved:ro
+
+  # ----------------------------------------------------------------------------
+  # React Frontend (Vite)
+  # ----------------------------------------------------------------------------
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: urbanflood_frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+
+volumes:
+  postgis_data:

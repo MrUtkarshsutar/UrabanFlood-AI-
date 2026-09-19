@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgis/postgis:16-3.4
+    container_name: urbanflood_db_dev
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: urbanflood_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgis_dev_data:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    container_name: urbanflood_backend_dev
+    restart: unless-stopped
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    depends_on:
+      - db
+    environment:
+      - ENVIRONMENT=development
+      - DEBUG=true
+      - DATABASE_URL=postgresql+asyncpg://postgres:postgres@db:5432/urbanflood_db
+      - MODEL_PATH=/app/ai/models/saved/xgboost_flood_model_latest.joblib
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+      - ./ai:/app/ai
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    container_name: urbanflood_frontend_dev
+    restart: unless-stopped
+    command: npm run dev -- --host
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+
+volumes:
+  postgis_dev_data:
