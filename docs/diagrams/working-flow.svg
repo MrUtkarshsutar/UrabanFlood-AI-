@@ -1,0 +1,147 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 1160" width="100%" height="100%" style="background:#070d18; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <!-- Gradients -->
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#182338"/>
+      <stop offset="100%" stop-color="#0f1726"/>
+    </linearGradient>
+    <linearGradient id="engineGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1b2842"/>
+      <stop offset="100%" stop-color="#101828"/>
+    </linearGradient>
+    <linearGradient id="borderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#0284c7" stop-opacity="0.3"/>
+    </linearGradient>
+    <!-- Arrow Marker -->
+    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8"/>
+    </marker>
+    <!-- Glow Filter -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Title -->
+  <text x="300" y="46" text-anchor="middle" font-size="22" font-weight="700" fill="#e2e8f0" letter-spacing="1">UrbanFlood AI — Working Flow</text>
+
+  <!-- 1. DATA -->
+  <g transform="translate(80, 70)">
+    <rect width="440" height="74" rx="10" fill="url(#cardGrad)" stroke="url(#borderGrad)" stroke-width="1.5"/>
+    <text x="220" y="32" text-anchor="middle" font-size="16" font-weight="700" fill="#f8fafc" letter-spacing="0.5">1. DATA</text>
+    <text x="220" y="52" text-anchor="middle" font-size="12" fill="#94a3b8">Rainfall</text>
+    <text x="220" y="66" text-anchor="middle" font-size="11" fill="#64748b">DEM • OSM</text>
+  </g>
+
+  <!-- Arrow 1 -> 2 -->
+  <line x1="300" y1="144" x2="300" y2="172" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- 2. GIS -->
+  <g transform="translate(80, 174)">
+    <rect width="440" height="74" rx="10" fill="url(#cardGrad)" stroke="url(#borderGrad)" stroke-width="1.5"/>
+    <text x="220" y="32" text-anchor="middle" font-size="16" font-weight="700" fill="#f8fafc" letter-spacing="0.5">2. GIS</text>
+    <text x="220" y="52" text-anchor="middle" font-size="12" fill="#94a3b8">Elevation</text>
+    <text x="220" y="66" text-anchor="middle" font-size="11" fill="#64748b">Slope • Flow</text>
+  </g>
+
+  <!-- Arrow 2 -> 3 -->
+  <line x1="300" y1="248" x2="300" y2="276" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- 3. FLOOD MODEL -->
+  <g transform="translate(80, 278)">
+    <rect width="440" height="74" rx="10" fill="url(#cardGrad)" stroke="url(#borderGrad)" stroke-width="1.5"/>
+    <text x="220" y="32" text-anchor="middle" font-size="16" font-weight="700" fill="#f8fafc" letter-spacing="0.5">3. FLOOD MODEL</text>
+    <text x="220" y="52" text-anchor="middle" font-size="12" fill="#94a3b8">Runoff</text>
+    <text x="220" y="66" text-anchor="middle" font-size="11" fill="#64748b">Terrain • Drainage</text>
+  </g>
+
+  <!-- Arrow 3 -> 4 -->
+  <line x1="300" y1="352" x2="300" y2="380" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- 4. AI / ML -->
+  <g transform="translate(80, 382)">
+    <rect width="440" height="74" rx="10" fill="url(#cardGrad)" stroke="url(#borderGrad)" stroke-width="1.5"/>
+    <text x="220" y="32" text-anchor="middle" font-size="16" font-weight="700" fill="#f8fafc" letter-spacing="0.5">4. AI / ML</text>
+    <text x="220" y="52" text-anchor="middle" font-size="12" fill="#94a3b8">XGBoost</text>
+    <text x="220" y="66" text-anchor="middle" font-size="11" fill="#64748b">Risk prediction</text>
+  </g>
+
+  <!-- Arrow 4 -> 5 -->
+  <line x1="300" y1="456" x2="300" y2="484" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- 5. API -->
+  <g transform="translate(80, 486)">
+    <rect width="440" height="74" rx="10" fill="url(#cardGrad)" stroke="url(#borderGrad)" stroke-width="1.5"/>
+    <text x="220" y="32" text-anchor="middle" font-size="16" font-weight="700" fill="#f8fafc" letter-spacing="0.5">5. API</text>
+    <text x="220" y="52" text-anchor="middle" font-size="12" fill="#94a3b8">FastAPI</text>
+    <text x="220" y="66" text-anchor="middle" font-size="11" fill="#64748b">PostGIS</text>
+  </g>
+
+  <!-- Arrow 5 -> 6 -->
+  <line x1="300" y1="560" x2="300" y2="588" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- 6. MAP -->
+  <g transform="translate(80, 590)">
+    <rect width="440" height="74" rx="10" fill="url(#cardGrad)" stroke="url(#borderGrad)" stroke-width="1.5"/>
+    <text x="220" y="32" text-anchor="middle" font-size="16" font-weight="700" fill="#f8fafc" letter-spacing="0.5">6. MAP</text>
+    <text x="220" y="52" text-anchor="middle" font-size="12" fill="#94a3b8">React</text>
+    <text x="220" y="66" text-anchor="middle" font-size="11" fill="#64748b">Leaflet</text>
+  </g>
+
+  <!-- Arrow 6 -> 7 -->
+  <line x1="300" y1="664" x2="300" y2="692" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- 7. ROUTING -->
+  <g transform="translate(80, 694)">
+    <rect width="440" height="74" rx="10" fill="url(#cardGrad)" stroke="url(#borderGrad)" stroke-width="1.5"/>
+    <text x="220" y="32" text-anchor="middle" font-size="16" font-weight="700" fill="#f8fafc" letter-spacing="0.5">7. ROUTING</text>
+    <text x="220" y="52" text-anchor="middle" font-size="12" fill="#94a3b8">A* / Graph</text>
+    <text x="220" y="66" text-anchor="middle" font-size="11" fill="#64748b">Safer route</text>
+  </g>
+
+  <!-- Arrow 7 -> Decision Engine -->
+  <line x1="300" y1="768" x2="300" y2="806" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- FLOOD DECISION ENGINE -->
+  <g transform="translate(50, 810)">
+    <rect width="500" height="136" rx="12" fill="url(#engineGrad)" stroke="#38bdf8" stroke-width="1.8" filter="url(#glow)"/>
+    <text x="250" y="34" text-anchor="middle" font-size="16" font-weight="800" fill="#38bdf8" letter-spacing="1">FLOOD DECISION ENGINE</text>
+    <text x="250" y="62" text-anchor="middle" font-size="12" font-weight="500" fill="#e2e8f0">Rainfall → Runoff → Surface Flow → Drainage Capacity</text>
+    <text x="250" y="86" text-anchor="middle" font-size="12" fill="#94a3b8">If runoff &gt; drainage capacity → excess water → water depth</text>
+    <text x="250" y="112" text-anchor="middle" font-size="12" font-weight="600" fill="#38bdf8">Forecast: NOW → +30 → +60 → +120 → +180 min</text>
+  </g>
+
+  <!-- Arrows to 8, 9, OFFLINE -->
+  <line x1="125" y1="946" x2="125" y2="974" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="300" y1="946" x2="300" y2="974" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="475" y1="946" x2="475" y2="974" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- 8. ALERT -->
+  <g transform="translate(50, 978)">
+    <rect width="150" height="82" rx="10" fill="url(#cardGrad)" stroke="url(#borderGrad)" stroke-width="1.5"/>
+    <text x="75" y="32" text-anchor="middle" font-size="14" font-weight="700" fill="#f8fafc">8. ALERT</text>
+    <text x="75" y="52" text-anchor="middle" font-size="11" fill="#94a3b8">Critical zones</text>
+    <text x="75" y="68" text-anchor="middle" font-size="10" fill="#64748b">Emergency alert</text>
+  </g>
+
+  <!-- 9. RESPONSE -->
+  <g transform="translate(225, 978)">
+    <rect width="150" height="82" rx="10" fill="url(#cardGrad)" stroke="url(#borderGrad)" stroke-width="1.5"/>
+    <text x="75" y="32" text-anchor="middle" font-size="14" font-weight="700" fill="#f8fafc">9. RESPONSE</text>
+    <text x="75" y="52" text-anchor="middle" font-size="11" fill="#94a3b8">Authority + Public</text>
+    <text x="75" y="68" text-anchor="middle" font-size="10" fill="#64748b">Predict • Prepare</text>
+  </g>
+
+  <!-- OFFLINE -->
+  <g transform="translate(400, 978)">
+    <rect width="150" height="82" rx="10" fill="url(#cardGrad)" stroke="url(#borderGrad)" stroke-width="1.5"/>
+    <text x="75" y="32" text-anchor="middle" font-size="14" font-weight="700" fill="#f8fafc">OFFLINE</text>
+    <text x="75" y="52" text-anchor="middle" font-size="11" fill="#94a3b8">Cached maps</text>
+    <text x="75" y="68" text-anchor="middle" font-size="10" fill="#64748b">Last forecast</text>
+  </g>
+
+  <!-- Bottom Tagline -->
+  <text x="300" y="1110" text-anchor="middle" font-size="15" font-weight="800" fill="#38bdf8" letter-spacing="2">PREDICT  →  VISUALIZE  →  ALERT  →  RESPOND</text>
+</svg>

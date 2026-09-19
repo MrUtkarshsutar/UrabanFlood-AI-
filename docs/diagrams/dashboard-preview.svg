@@ -1,0 +1,351 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="100%" height="100%" style="background:#070c18; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <!-- Background Gradients -->
+    <linearGradient id="headerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0e172a"/>
+      <stop offset="100%" stop-color="#0a101d"/>
+    </linearGradient>
+    <linearGradient id="panelGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#111c30"/>
+      <stop offset="100%" stop-color="#0b1322"/>
+    </linearGradient>
+    <linearGradient id="alertGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2a1215"/>
+      <stop offset="100%" stop-color="#180b0e"/>
+    </linearGradient>
+    <linearGradient id="tealBtn" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#06b6d4"/>
+      <stop offset="100%" stop-color="#0ea5e9"/>
+    </linearGradient>
+    <linearGradient id="greenRoute" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#34d399"/>
+    </linearGradient>
+    <!-- Glow Filters -->
+    <filter id="glowRed" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="12" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glowOrange" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glowGreen" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- ================= TOP NAVBAR ================= -->
+  <rect x="0" y="0" width="1000" height="56" fill="url(#headerGrad)" stroke="#1e293b" stroke-width="1"/>
+  <!-- Logo Icon -->
+  <rect x="18" y="12" width="32" height="32" rx="8" fill="#0284c7"/>
+  <path d="M 23 28 Q 28 22 34 28 T 45 28" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M 23 33 Q 28 27 34 33 T 45 33" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" opacity="0.8"/>
+  
+  <text x="58" y="29" font-size="16" font-weight="800" fill="#f8fafc">UrbanFlood AI</text>
+  <rect x="175" y="17" width="42" height="18" rx="9" fill="#064e3b" stroke="#059669" stroke-width="1"/>
+  <circle cx="184" cy="26" r="3.5" fill="#34d399"/>
+  <text x="192" y="30" font-size="10" font-weight="700" fill="#34d399">LIVE</text>
+  <text x="58" y="44" font-size="10" fill="#64748b">Urban Flood Nowcasting &amp; Safety Platform</text>
+
+  <!-- Center Status -->
+  <rect x="270" y="14" width="460" height="28" rx="14" fill="#0b1322" stroke="#1e293b" stroke-width="1"/>
+  <text x="282" y="32" font-size="11" fill="#94a3b8">Current Area Status:</text>
+  <rect x="382" y="18" width="105" height="20" rx="10" fill="#450a0a" stroke="#dc2626" stroke-width="1"/>
+  <text x="390" y="32" font-size="9.5" font-weight="700" fill="#f87171">⚠ HIGH RISK ZONE</text>
+  <text x="498" y="32" font-size="11" fill="#64748b">Last updated: <tspan font-weight="700" fill="#cbd5e1">10:42 AM</tspan></text>
+  <text x="632" y="32" font-size="11" fill="#38bdf8">🕒 Forecast: Next 3 Hours</text>
+
+  <!-- Right Actions -->
+  <rect x="780" y="14" width="65" height="28" rx="6" fill="#091824" stroke="#0284c7" stroke-width="1"/>
+  <text x="792" y="32" font-size="11" font-weight="600" fill="#38bdf8">📶 Online</text>
+  <rect x="852" y="14" width="134" height="28" rx="6" fill="#dc2626"/>
+  <text x="866" y="32" font-size="11" font-weight="700" fill="#ffffff">🚨 Emergency 911 / 112</text>
+
+  <!-- ================= LEFT MAP AREA (x:14, y:66, w:612, h:810) ================= -->
+  <rect x="14" y="66" width="612" height="820" rx="10" fill="#080f1d" stroke="#1e293b" stroke-width="1"/>
+
+  <!-- Map Header Controls -->
+  <rect x="14" y="66" width="612" height="42" rx="10" fill="#0d1728" stroke="#1e293b" stroke-width="1"/>
+  <rect x="24" y="74" width="76" height="26" rx="5" fill="#0284c7"/>
+  <text x="34" y="91" font-size="11" font-weight="700" fill="#ffffff">🛡 Risk View</text>
+  <text x="114" y="91" font-size="11" fill="#94a3b8">Flood Depth</text>
+  <text x="190" y="91" font-size="11" fill="#94a3b8">Rainfall</text>
+  <text x="250" y="91" font-size="11" fill="#94a3b8">Safe Routes</text>
+
+  <text x="350" y="91" font-size="10" font-weight="700" fill="#64748b">MAP ZONES:</text>
+  <circle cx="426" cy="88" r="3.5" fill="#10b981"/>
+  <text x="434" y="91" font-size="9.5" fill="#94a3b8">Safe</text>
+  <circle cx="468" cy="88" r="3.5" fill="#eab308"/>
+  <text x="476" y="91" font-size="9.5" fill="#94a3b8">Warning</text>
+  <circle cx="522" cy="88" r="3.5" fill="#f97316"/>
+  <text x="530" y="91" font-size="9.5" fill="#94a3b8">High</text>
+  <circle cx="562" cy="88" r="3.5" fill="#ef4444"/>
+  <text x="570" y="91" font-size="9.5" fill="#94a3b8">Critical</text>
+  <circle cx="610" cy="87" r="8" fill="#132034" stroke="#38bdf8" stroke-width="1"/>
+  <circle cx="610" cy="87" r="2" fill="#38bdf8"/>
+
+  <!-- Street Network Graph (Vector lines) -->
+  <g stroke="#1e293b" stroke-width="12" stroke-linecap="round">
+    <!-- North Parkway -->
+    <line x1="40" y1="320" x2="590" y2="320"/>
+    <!-- Central Road -->
+    <line x1="40" y1="420" x2="590" y2="420"/>
+    <!-- South Commerce Way -->
+    <line x1="40" y1="520" x2="590" y2="520"/>
+    <!-- Vertical Roads: 1st Ave, Metro Blvd, East Hill Road -->
+    <line x1="120" y1="240" x2="120" y2="620"/>
+    <line x1="245" y1="240" x2="245" y2="620"/>
+    <line x1="395" y1="240" x2="395" y2="620"/>
+    <line x1="505" y1="240" x2="505" y2="620"/>
+  </g>
+
+  <!-- Waterway / Canal Ribbon -->
+  <path d="M 20 480 Q 200 470 340 500 T 610 475" fill="none" stroke="#0369a1" stroke-width="14" opacity="0.35"/>
+  <path d="M 20 480 Q 200 470 340 500 T 610 475" fill="none" stroke="#0ea5e9" stroke-width="3" stroke-dasharray="6,4" opacity="0.7"/>
+
+  <!-- Road Labels -->
+  <text x="126" y="280" font-size="8.5" fill="#475569" font-weight="600" transform="rotate(90, 126, 280)">1ST AVENUE</text>
+  <text x="251" y="280" font-size="8.5" fill="#475569" font-weight="600" transform="rotate(90, 251, 280)">METRO BLVD</text>
+  <text x="401" y="280" font-size="8.5" fill="#475569" font-weight="600" transform="rotate(90, 401, 280)">EAST HILL ROAD</text>
+  <text x="240" y="316" font-size="8.5" fill="#475569" font-weight="600">NORTH PARKWAY</text>
+  <text x="280" y="534" font-size="8.5" fill="#475569" font-weight="600">SOUTH COMMERCE WAY</text>
+
+  <!-- Hazard Heatmap Overlays (Glowing Circles) -->
+  <!-- 1. Warning Yellow Zone -->
+  <circle cx="140" cy="460" r="32" fill="#eab308" opacity="0.25" filter="url(#glowOrange)"/>
+  <circle cx="140" cy="460" r="14" fill="#eab308" opacity="0.45"/>
+  <rect x="110" y="475" width="60" height="14" rx="3" fill="#854d0e" stroke="#eab308" stroke-width="1"/>
+  <text x="114" y="485" font-size="7.5" font-weight="700" fill="#fef08a">⚠ 0.25m WARNING</text>
+
+  <!-- 2. High Orange Zone -->
+  <circle cx="245" cy="365" r="40" fill="#f97316" opacity="0.3" filter="url(#glowOrange)"/>
+  <circle cx="245" cy="365" r="16" fill="#f97316" opacity="0.6"/>
+  <rect x="215" y="348" width="56" height="14" rx="3" fill="#7c2d12" stroke="#f97316" stroke-width="1"/>
+  <text x="219" y="358" font-size="7.5" font-weight="700" fill="#ffedd5">⚠ 0.42m HIGH</text>
+
+  <!-- 3. Critical Red Zone (Underpass) -->
+  <circle cx="340" cy="420" r="60" fill="#ef4444" opacity="0.35" filter="url(#glowRed)"/>
+  <circle cx="340" cy="420" r="22" fill="#b91c1c" opacity="0.75"/>
+  <rect x="282" y="390" width="76" height="16" rx="3" fill="#450a0a" stroke="#ef4444" stroke-width="1.2"/>
+  <text x="288" y="401" font-size="8" font-weight="700" fill="#fecaca">🚨 0.65m CRITICAL</text>
+  
+  <!-- Barricades on Central Road -->
+  <circle cx="275" cy="420" r="7" fill="#dc2626"/>
+  <line x1="271" y1="420" x2="279" y2="420" stroke="#ffffff" stroke-width="2"/>
+  <circle cx="370" cy="420" r="7" fill="#dc2626"/>
+  <line x1="366" y1="420" x2="374" y2="420" stroke="#ffffff" stroke-width="2"/>
+  <rect x="310" y="442" width="105" height="15" rx="3" fill="#450a0a" stroke="#dc2626" stroke-width="0.8"/>
+  <text x="316" y="453" font-size="7.5" font-weight="700" fill="#fca5a5">⛔ 3 FLOOD HAZARDS BYPASSED</text>
+
+  <!-- NEON GREEN SAFE ROUTE LINE -->
+  <path d="M 120 520 L 120 320 L 505 320 L 505 420" fill="none" stroke="url(#greenRoute)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" filter="url(#glowGreen)"/>
+  <circle cx="120" cy="520" r="5" fill="#34d399"/>
+  <!-- Destination Safe Node -->
+  <circle cx="505" cy="320" r="16" fill="#10b981" opacity="0.2" filter="url(#glowGreen)"/>
+  <circle cx="505" cy="320" r="6" fill="#10b981"/>
+  <rect x="466" y="300" width="76" height="16" rx="3" fill="#064e3b" stroke="#10b981" stroke-width="1"/>
+  <text x="472" y="311" font-size="8" font-weight="700" fill="#a7f3d0">✓ SAFE ELEVATION</text>
+
+  <!-- POPUP CARD ON CENTRAL UNDERPASS -->
+  <g transform="translate(26, 650)">
+    <rect width="240" height="120" rx="8" fill="#111827" stroke="#dc2626" stroke-width="1.2"/>
+    <circle cx="14" cy="18" r="4" fill="#ef4444"/>
+    <text x="24" y="21" font-size="10.5" font-weight="800" fill="#ffffff">ZONE: CENTRAL UNDERPASS</text>
+    <text x="226" y="18" font-size="10" fill="#9ca3af">✕</text>
+    <text x="12" y="40" font-size="8.5" fill="#cbd5e1">Severe water accumulation. Road is</text>
+    <text x="12" y="52" font-size="8.5" fill="#cbd5e1">impassable to all civilian vehicles.</text>
+    <text x="12" y="74" font-size="8" fill="#9ca3af">Current Depth: <tspan font-weight="700" fill="#f87171">0.65 m (2.1 ft)</tspan></text>
+    <text x="126" y="74" font-size="8" fill="#9ca3af">Forecast Peak: <tspan font-weight="700" fill="#fbbf24">In 35 mins</tspan></text>
+    <rect x="12" y="86" width="216" height="24" rx="4" fill="#059669"/>
+    <text x="56" y="102" font-size="9" font-weight="700" fill="#ffffff">🛡 Recalculate Safe Bypass</text>
+  </g>
+
+  <!-- Map Zoom Buttons -->
+  <rect x="590" y="736" width="22" height="22" rx="4" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="596" y="751" font-size="14" font-weight="700" fill="#cbd5e1">+</text>
+  <rect x="590" y="764" width="22" height="22" rx="4" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="598" y="778" font-size="14" font-weight="700" fill="#cbd5e1">−</text>
+
+  <!-- Predictive Timeline Slider Bar -->
+  <rect x="14" y="796" width="612" height="50" rx="6" fill="#091220" stroke="#1e293b" stroke-width="1"/>
+  <circle cx="28" cy="820" r="3.5" fill="#0ea5e9"/>
+  <text x="36" y="824" font-size="9.5" font-weight="700" fill="#94a3b8">PREDICTIVE TIMELINE:</text>
+  <!-- Buttons -->
+  <rect x="140" y="810" width="40" height="22" rx="4" fill="#0284c7"/>
+  <text x="148" y="825" font-size="9.5" font-weight="700" fill="#ffffff">NOW</text>
+  <rect x="186" y="810" width="56" height="22" rx="4" fill="#132034"/>
+  <text x="194" y="825" font-size="9.5" fill="#94a3b8">+30 MIN</text>
+  <rect x="248" y="810" width="56" height="22" rx="4" fill="#132034"/>
+  <text x="256" y="825" font-size="9.5" fill="#94a3b8">+60 MIN</text>
+  <rect x="310" y="810" width="60" height="22" rx="4" fill="#132034"/>
+  <text x="316" y="825" font-size="9.5" fill="#94a3b8">+120 MIN</text>
+
+  <!-- Stats on Right of Timeline -->
+  <text x="390" y="817" font-size="7.5" fill="#64748b">Probability</text>
+  <text x="390" y="831" font-size="11" font-weight="800" fill="#38bdf8">87%</text>
+  <text x="444" y="817" font-size="7.5" fill="#64748b">Est. Water Depth</text>
+  <text x="444" y="831" font-size="11" font-weight="800" fill="#f87171">0.65 m</text>
+  <text x="502" y="817" font-size="7.5" fill="#64748b">Affected Roads</text>
+  <text x="502" y="831" font-size="11" font-weight="800" fill="#fde047">12 Roads</text>
+  <text x="556" y="817" font-size="7.5" fill="#64748b">Risk Level</text>
+  <text x="556" y="831" font-size="10" font-weight="800" fill="#ef4444">● CRITICAL</text>
+
+  <!-- BOTTOM 4 METRIC CARDS (y: 894, h: 90) -->
+  <!-- Card 1: Rainfall -->
+  <g transform="translate(14, 894)">
+    <rect width="145" height="90" rx="8" fill="url(#panelGrad)" stroke="#1e293b" stroke-width="1"/>
+    <text x="12" y="24" font-size="10" fill="#94a3b8">Rainfall Intensity 🌧</text>
+    <text x="12" y="55" font-size="20" font-weight="800" fill="#38bdf8">42 <tspan font-size="12" font-weight="500">mm/hr</tspan></text>
+    <text x="12" y="75" font-size="8.5" fill="#e0f2fe">📈 Heavy torrential band</text>
+  </g>
+  <!-- Card 2: Max Depth -->
+  <g transform="translate(170, 894)">
+    <rect width="145" height="90" rx="8" fill="url(#panelGrad)" stroke="#1e293b" stroke-width="1"/>
+    <text x="12" y="24" font-size="10" fill="#94a3b8">Max Water Depth 📏</text>
+    <text x="12" y="55" font-size="18" font-weight="800" fill="#f87171">0.65 <tspan font-size="10">m (2.1 ft)</tspan></text>
+    <text x="12" y="75" font-size="8.5" fill="#fecaca">Impasse for low sedans</text>
+  </g>
+  <!-- Card 3: High-Risk Zones -->
+  <g transform="translate(326, 894)">
+    <rect width="145" height="90" rx="8" fill="url(#panelGrad)" stroke="#1e293b" stroke-width="1"/>
+    <text x="12" y="24" font-size="10" fill="#94a3b8">High-Risk Zones 📍</text>
+    <text x="12" y="55" font-size="20" font-weight="800" fill="#fb923c">8 <tspan font-size="10" font-weight="500">municipal zones</tspan></text>
+    <text x="12" y="75" font-size="8.5" fill="#fed7aa">Under continuous sensor watch</text>
+  </g>
+  <!-- Card 4: Affected Roads -->
+  <g transform="translate(482, 894)">
+    <rect width="144" height="90" rx="8" fill="url(#panelGrad)" stroke="#1e293b" stroke-width="1"/>
+    <text x="12" y="24" font-size="10" fill="#94a3b8">Affected Roads 🚧</text>
+    <text x="12" y="55" font-size="20" font-weight="800" fill="#facc15">24 <tspan font-size="10" font-weight="500">road segments</tspan></text>
+    <text x="12" y="75" font-size="8.5" fill="#fef08a">Safe bypasses calculated</text>
+  </g>
+
+  <!-- ================= RIGHT SIDEBAR (x:636, y:66, w:350, h:918) ================= -->
+
+  <!-- Card 1: CRITICAL FLOOD ALERT -->
+  <g transform="translate(636, 66)">
+    <rect width="350" height="230" rx="10" fill="url(#alertGrad)" stroke="#dc2626" stroke-width="1.5"/>
+    <circle cx="16" cy="22" r="4" fill="#ef4444"/>
+    <text x="26" y="26" font-size="11" font-weight="800" fill="#fca5a5" letter-spacing="0.5">CRITICAL FLOOD ALERT</text>
+    <rect x="234" y="14" width="104" height="18" rx="4" fill="#7f1d1d" stroke="#ef4444" stroke-width="0.8"/>
+    <text x="240" y="27" font-size="8.5" font-weight="700" fill="#fecaca">ACTION REQUIRED</text>
+    
+    <text x="14" y="54" font-size="14" font-weight="800" fill="#ffffff">High flood risk detected near Central</text>
+    <text x="14" y="72" font-size="14" font-weight="800" fill="#ffffff">Road Underpass</text>
+
+    <!-- 3 Stat Pills -->
+    <rect x="14" y="86" width="102" height="42" rx="6" fill="#180a0c" stroke="#331418" stroke-width="1"/>
+    <text x="22" y="102" font-size="8.5" fill="#9ca3af">Water Depth</text>
+    <text x="22" y="120" font-size="12" font-weight="800" fill="#f87171">0.65 m</text>
+
+    <rect x="124" y="86" width="102" height="42" rx="6" fill="#180a0c" stroke="#331418" stroke-width="1"/>
+    <text x="132" y="102" font-size="8.5" fill="#9ca3af">Expected In</text>
+    <text x="132" y="120" font-size="12" font-weight="800" fill="#fbbf24">35 min</text>
+
+    <rect x="234" y="86" width="102" height="42" rx="6" fill="#180a0c" stroke="#331418" stroke-width="1"/>
+    <text x="242" y="102" font-size="8.5" fill="#9ca3af">Risk</text>
+    <text x="242" y="120" font-size="12" font-weight="800" fill="#ef4444">CRITICAL</text>
+
+    <!-- Advisory -->
+    <rect x="14" y="136" width="322" height="46" rx="6" fill="#301014"/>
+    <text x="22" y="152" font-size="9" font-weight="700" fill="#fca5a5">⚠ Recommended Citizen Action:</text>
+    <text x="22" y="165" font-size="8" fill="#fecaca">Avoid this area immediately and use the verified alternate</text>
+    <text x="22" y="176" font-size="8" fill="#fecaca">northern bypass route.</text>
+
+    <!-- Buttons -->
+    <rect x="14" y="190" width="154" height="28" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="44" y="208" font-size="10" font-weight="600" fill="#94a3b8">ℹ View Alert Details</text>
+    <rect x="178" y="190" width="158" height="28" rx="6" fill="#0d9488"/>
+    <text x="210" y="208" font-size="10" font-weight="700" fill="#ffffff">🧭 Find Safe Route</text>
+  </g>
+
+  <!-- Card 2: FIND A SAFER ROUTE -->
+  <g transform="translate(636, 308)">
+    <rect width="350" height="284" rx="10" fill="url(#panelGrad)" stroke="#1e293b" stroke-width="1"/>
+    <text x="14" y="26" font-size="12" font-weight="800" fill="#f8fafc">🧭 Find a Safer Route</text>
+    <rect x="238" y="12" width="100" height="18" rx="4" fill="#064e3b" stroke="#10b981" stroke-width="0.8"/>
+    <text x="244" y="25" font-size="8" font-weight="700" fill="#6ee7b7">Flood-Free Routing</text>
+
+    <!-- Origin Input -->
+    <text x="14" y="52" font-size="8.5" fill="#64748b">From (Origin):</text>
+    <rect x="14" y="58" width="322" height="30" rx="6" fill="#070d19" stroke="#1e293b" stroke-width="1"/>
+    <text x="24" y="77" font-size="9" fill="#94a3b8">📍 Current Location (1st Ave &amp; South Commerce)</text>
+
+    <!-- Destination Input -->
+    <text x="14" y="104" font-size="8.5" fill="#64748b">To (Destination):</text>
+    <rect x="14" y="110" width="322" height="30" rx="6" fill="#070d19" stroke="#1e293b" stroke-width="1"/>
+    <text x="24" y="129" font-size="9" fill="#cbd5e1">🏛 East Civic Shelter / High Ground</text>
+
+    <rect x="14" y="148" width="322" height="30" rx="6" fill="url(#tealBtn)"/>
+    <text x="96" y="167" font-size="10.5" font-weight="700" fill="#ffffff">🔍 Recalculate Safe Route</text>
+
+    <!-- Route Found Result Box -->
+    <rect x="14" y="188" width="322" height="84" rx="6" fill="#052e16" stroke="#059669" stroke-width="1"/>
+    <text x="24" y="206" font-size="10" font-weight="800" fill="#6ee7b7">✓ SAFE ROUTE FOUND</text>
+    <rect x="230" y="194" width="98" height="16" rx="3" fill="#064e3b"/>
+    <text x="236" y="206" font-size="8" font-weight="700" fill="#34d399">ROUTE RISK: LOW</text>
+
+    <text x="24" y="230" font-size="8" fill="#a7f3d0">Distance: <tspan font-weight="800" font-size="11">4.2 km</tspan></text>
+    <text x="124" y="230" font-size="8" fill="#a7f3d0">Est. Travel: <tspan font-weight="800" font-size="11">14 min</tspan></text>
+    <text x="216" y="230" font-size="8" fill="#a7f3d0">Hazards Avoided: <tspan font-weight="800" font-size="11">3 Floods</tspan></text>
+
+    <text x="24" y="255" font-size="8.5" fill="#d1fae5">✓ Bypasses Central Road via North Parkway.</text>
+  </g>
+
+  <!-- Card 3: WHAT SHOULD YOU DO? -->
+  <g transform="translate(636, 604)">
+    <rect width="350" height="268" rx="10" fill="url(#panelGrad)" stroke="#1e293b" stroke-width="1"/>
+    <text x="14" y="26" font-size="12" font-weight="800" fill="#f8fafc">📋 WHAT SHOULD YOU DO?</text>
+    <!-- Filter Tabs -->
+    <rect x="228" y="12" width="110" height="18" rx="4" fill="#132034"/>
+    <rect x="228" y="12" width="32" height="18" rx="4" fill="#0284c7"/>
+    <text x="236" y="24" font-size="8" font-weight="700" fill="#ffffff">All</text>
+    <text x="265" y="24" font-size="8" fill="#94a3b8">Critical</text>
+    <text x="300" y="24" font-size="8" fill="#94a3b8">Normal</text>
+
+    <!-- Item 1: Critical -->
+    <rect x="14" y="42" width="322" height="74" rx="6" fill="#2d0b10" stroke="#7f1d1d" stroke-width="0.8"/>
+    <circle cx="26" cy="56" r="3.5" fill="#ef4444"/>
+    <text x="34" y="60" font-size="9.5" font-weight="800" fill="#fca5a5">If In Critical Flood Zone:</text>
+    <rect x="254" y="48" width="74" height="14" rx="3" fill="#7f1d1d"/>
+    <text x="260" y="59" font-size="7.5" font-weight="700" fill="#fecaca">High Urgency</text>
+    <text x="26" y="76" font-size="8" fill="#fecaca">• <tspan font-weight="700">Avoid the area immediately.</tspan> Do not attempt to walk or drive</text>
+    <text x="30" y="86" font-size="8" fill="#fecaca">through water.</text>
+    <text x="26" y="98" font-size="8" fill="#fecaca">• Move immediately to higher elevation or designated shelter (East Civic).</text>
+    <text x="26" y="108" font-size="8" fill="#fecaca">• Follow official emergency siren &amp; municipal instructions.</text>
+
+    <!-- Item 2: Warning/High -->
+    <rect x="14" y="124" width="322" height="66" rx="6" fill="#291807" stroke="#78350f" stroke-width="0.8"/>
+    <circle cx="26" cy="138" r="3.5" fill="#f59e0b"/>
+    <text x="34" y="142" font-size="9.5" font-weight="800" fill="#fde68a">If In Warning or High Risk:</text>
+    <text x="26" y="158" font-size="8" fill="#fef3c7">• Avoid low-lying underpasses and riverbanks.</text>
+    <text x="26" y="170" font-size="8" fill="#fef3c7">• Check updated nowcast every 15 minutes before traveling.</text>
+    <text x="26" y="182" font-size="8" fill="#fef3c7">• Pre-load offline emergency shelter maps.</text>
+
+    <!-- Item 3: Safe Elevation -->
+    <rect x="14" y="198" width="322" height="58" rx="6" fill="#042717" stroke="#065f46" stroke-width="0.8"/>
+    <circle cx="26" cy="212" r="3.5" fill="#10b981"/>
+    <text x="34" y="216" font-size="9.5" font-weight="800" fill="#a7f3d0">If In Safe Elevation:</text>
+    <text x="26" y="232" font-size="8" fill="#d1fae5">Normal travel permitted. Keep phone charged and monitor</text>
+    <text x="26" y="244" font-size="8" fill="#d1fae5">neighborhood rainfall rate.</text>
+  </g>
+
+  <!-- Card 4: NETWORK & OFFLINE READINESS -->
+  <g transform="translate(636, 884)">
+    <rect width="350" height="100" rx="10" fill="url(#panelGrad)" stroke="#1e293b" stroke-width="1"/>
+    <text x="14" y="26" font-size="11" font-weight="800" fill="#f8fafc">📶 NETWORK &amp; OFFLINE READINESS</text>
+    <rect x="254" y="12" width="84" height="18" rx="4" fill="#064e3b" stroke="#059669" stroke-width="0.8"/>
+    <text x="260" y="24" font-size="7.5" font-weight="700" fill="#6ee7b7">AUTO-CACHED</text>
+    
+    <text x="14" y="48" font-size="8.5" fill="#94a3b8">Synced: 10:42 AM (4 minutes ago)</text>
+
+    <!-- 2 Buttons -->
+    <rect x="14" y="58" width="154" height="30" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="44" y="78" font-size="9.5" font-weight="600" fill="#cbd5e1">📥 Cached Map</text>
+    <rect x="178" y="58" width="158" height="30" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="206" y="78" font-size="9.5" font-weight="600" fill="#cbd5e1">📕 Emergency Info</text>
+  </g>
+
+</svg>

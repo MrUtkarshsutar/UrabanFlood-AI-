@@ -10,6 +10,13 @@ An AI-powered urban flood nowcasting and early warning platform that combines we
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![GitHub](https://img.shields.io/badge/Repository-GitHub-181717?logo=github&logoColor=white)](https://github.com/MrUtkarshsutar/UrabanFlood-AI-)
 
+<p align="center">
+  <img src="docs/diagrams/dashboard-preview.png" alt="UrbanFlood AI Interactive Flood Dashboard &amp; Safe Route Engine" width="100%"/>
+</p>
+<p align="center">
+  <em>UrbanFlood AI Interactive Command &amp; Citizen Dashboard: Real-time flood risk nowcasting, underpass hazard alerts, and flood-free safe route recommendation.</em>
+</p>
+
 ---
 
 ## Table of Contents
@@ -19,70 +26,76 @@ An AI-powered urban flood nowcasting and early warning platform that combines we
 3. [Proposed Solution](#3-proposed-solution)
 4. [Key Features](#4-key-features)
 5. [System Architecture](#5-system-architecture)
-6. [Working Flow](#6-working-flow)
-7. [AI/ML Approach](#7-aiml-approach)
-8. [GIS & Mapping](#8-gis--mapping)
-9. [Data Sources](#9-data-sources)
-10. [Technology Stack](#10-technology-stack)
-11. [Project Structure](#11-project-structure)
-12. [Installation](#12-installation)
-13. [Environment Variables](#13-environment-variables)
-14. [Running the Project](#14-running-the-project)
-15. [API Overview](#15-api-overview)
-16. [Flood Risk Levels](#16-flood-risk-levels)
-17. [Offline/Low-Connectivity Strategy](#17-offlinelow-connectivity-strategy)
-18. [Security](#18-security)
-19. [Testing](#19-testing)
-20. [Future Scope](#20-future-scope)
-21. [Team](#21-team)
-22. [Contribution](#22-contribution)
-23. [License](#23-license)
-24. [References](#24-references)
+6. [Working Workflow & User Journeys](#6-working-workflow--user-journeys)
+7. [Data Flow & Transformation Pipeline](#7-data-flow--transformation-pipeline)
+8. [AI/ML Approach](#8-aiml-approach)
+9. [GIS, Cartography & Spatial Subsystems](#9-gis-cartography--spatial-subsystems)
+10. [Data Sources & Feature Extraction Schema](#10-data-sources--feature-extraction-schema)
+11. [Safe Routing Engine & Hazard Avoidance](#11-safe-routing-engine--hazard-avoidance)
+12. [Complete Monorepo Project Structure](#12-complete-monorepo-project-structure)
+13. [Technology Stack](#13-technology-stack)
+14. [Installation & Rapid Setup](#14-installation--rapid-setup)
+15. [Environment Variables Matrix](#15-environment-variables-matrix)
+16. [Running the Project](#16-running-the-project)
+17. [Exhaustive API Documentation](#17-exhaustive-api-documentation)
+18. [Flood Risk Classification](#18-flood-risk-classification)
+19. [Offline & Low-Connectivity Strategy](#19-offline--low-connectivity-strategy)
+20. [Security & Data Protection](#20-security--data-protection)
+21. [Testing Strategy](#21-testing-strategy)
+22. [10-Phase Development Roadmap](#22-10-phase-development-roadmap)
+23. [Recommended First Files to Create](#23-recommended-first-files-to-create)
+24. [Future Scope](#24-future-scope)
+25. [Team](#25-team)
+26. [Contribution Guidelines](#26-contribution-guidelines)
+27. [License](#27-license)
+28. [Academic & Industry References](#28-academic--industry-references)
 
 ---
 
 ## 1. Overview
 
-**UrbanFlood AI** is a modular, open-source urban flood nowcasting, risk classification, early warning, and safe route recommendation system. Designed primarily for low-resource municipal deployments and citizen preparedness, UrbanFlood AI synthesizes meteorological forecasts with Digital Elevation Models (DEM), OpenStreetMap road graphs, and supervised machine learning to generate localized, dynamic flood susceptibility scores.
+**UrbanFlood AI** is a modular, open-source urban flood nowcasting, risk prediction, early warning, and hazard-evading navigation system. Tailored for municipal disaster management authorities, civic emergency responders, and citizens, UrbanFlood AI synthesizes real-time meteorological forecasts with Digital Elevation Models (DEM), OpenStreetMap (OSM) topological networks, and calibrated machine learning models.
+
+The system translates complex environmental and geospatial indicators into actionable, hyper-localized hazard indices, dynamic choropleth maps, and flood-resilient transit recommendations—even during periods of degraded cellular connectivity.
 
 ---
 
 ## 2. Problem Statement
 
-Urban centers across the globe face an escalating frequency and severity of flash floods driven by:
+Urban centers across the globe face an escalating frequency and severity of flash floods driven by interrelated hydrological, meteorological, and infrastructural pressures:
 
-* **Sudden Heavy Rainfall & Convective Storms**: Short-duration, extreme precipitation events deliver volumes that far exceed historical baseline measurements.
-* **Rapid Urbanization & Soil Imperviousness**: Continuous conversion of permeable soil into concrete, paved asphalt, and dense structures eliminates natural groundwater infiltration, drastically increasing overland runoff coefficient.
-* **Depression Sinks & Low-Lying Pockets**: Natural low-elevation depressions, sunken underpasses, and coastal floodplains quickly turn into hazardous inundation traps.
-* **Inadequate or Obstructed Drainage**: Stormwater drainage systems engineered decades ago are chronically undersized, poorly mapped, or blocked by siltation and solid waste.
-* **Lack of Localized Warnings**: Traditional weather forecasts operate at the scale of entire administrative districts, failing to pinpoint which specific street junctions or wards are experiencing life-threatening water logging.
-* **Difficulty Identifying Safe Routes**: Conventional commercial navigation engines steer vehicles through the shortest or fastest congested roads, regularly guiding drivers directly into impassable flooded underpasses.
-* **Limited Real-Time Decision Support**: Municipal emergency response teams and disaster management agencies lack unified spatial platforms that merge incoming weather telemetry with terrain physics for preemptive evacuation planning.
+* **Sudden Heavy Rainfall & Convective Storms**: Short-duration, extreme precipitation events (e.g. >50mm in under 60 minutes) deliver water volumes that exceed the infiltration capacity of urban watersheds.
+* **Rapid Urbanization & Soil Imperviousness**: Continuous conversion of permeable soil into concrete, asphalt, and high-density buildings reduces natural groundwater infiltration by up to 80%, multiplying peak surface runoff volume and flood wave velocities.
+* **Depression Sinks & Low-Lying Pockets**: Natural low-elevation depressions, sunken vehicular underpasses, and coastal floodplains quickly turn into hazardous inundation traps within minutes of intense rain.
+* **Inadequate or Obstructed Drainage**: Stormwater drainage systems engineered decades ago are chronically undersized, poorly mapped, or blocked by siltation, uncollected municipal solid waste, and tidal backflow.
+* **Lack of Localized Warnings**: Traditional weather forecasts operate at macro scales (entire administrative districts or states), failing to pinpoint which specific street junctions, underpasses, or wards are experiencing dangerous inundation.
+* **Difficulty Identifying Safe Routes**: Conventional commercial navigation engines steer vehicles through the shortest or fastest congested roads, regularly guiding drivers directly into submerged underpasses and lethal flash-flood zones.
+* **Limited Real-Time Decision Support**: Municipal emergency response teams and disaster management agencies lack unified spatial platforms that merge incoming weather telemetry with terrain physics for preemptive evacuation planning and resource deployment.
 
 ---
 
 ## 3. Proposed Solution
 
-UrbanFlood AI addresses these challenges through an integrated data and prediction pipeline:
+UrbanFlood AI bridges this technical divide through an integrated data processing and predictive intelligence pipeline:
 
 ```
-Weather Data (Open-Meteo)
+Weather Telemetry (Open-Meteo REST API)
          ↓
-GIS & Terrain Data (Copernicus DEM + OpenStreetMap)
+GIS & Terrain Models (Copernicus 30m DEM + OpenStreetMap Overpass)
          ↓
-Data Processing & Spatial Joining
+Spatial Harmonization & Automated Data Pipeline
          ↓
-Hydrological Feature Engineering (Slope, Accumulation, API)
+Hydrological Feature Engineering (Slope, Curvature, Drain Proximity, API)
          ↓
-AI/ML Susceptibility Prediction (XGBoost / Scikit-learn)
+AI/ML Susceptibility Prediction (Calibrated XGBoost Classifier)
          ↓
-Dynamic Flood Risk Map (Vector GeoJSON)
+Dynamic Flood Risk Map (Choropleth GeoJSON FeatureCollection)
          ↓
-Early Warning Alert Generation
+Early Warning Alert Generation (CAP-Compliant Advisory Engine)
          ↓
-Safe Route Recommendation Engine
+Safe Route Recommendation Engine (Hazard-Weighted Topological Graph)
          ↓
-Citizen & Municipal Admin Dashboards
+Citizen & Municipal Emergency Command Dashboards (React + Leaflet PWA)
 ```
 
 ---
@@ -92,7 +105,7 @@ Citizen & Municipal Admin Dashboards
 ### 4.1 Citizen Dashboard
 * **Current Flood Risk**: Instant localized hazard indicator based on user geolocation or address search.
 * **Interactive Risk Map**: Smooth vector map depicting color-coded flood hazard zones and water logging hotspots.
-* **Area Risk Level & Advisories**: Contextual safety guidelines based on calibrated severity (e.g. low-lying subway closures).
+* **Area Risk Level & Advisories**: Contextual safety guidelines based on calibrated severity (e.g., subway closures, low-lying caution).
 * **Precipitation Monitoring**: Live hourly rainfall totals alongside short-range (1 to 6 hour) convective forecasts.
 * **Push & In-App Early Warnings**: Immediate notifications when local precipitation intensity crosses safety thresholds.
 * **Safe Route Navigation**: Hazard-evading route recommendations avoiding flooded streets and low-elevation sumps.
@@ -124,7 +137,7 @@ Citizen & Municipal Admin Dashboards
 
 ## 5. System Architecture
 
-UrbanFlood AI decouples data ingestion, machine learning inference, backend business logic, and presentation:
+UrbanFlood AI decouples data ingestion, machine learning inference, backend business logic, and client presentation into distinct, resilient layers:
 
 ```mermaid
 flowchart TD
@@ -142,56 +155,162 @@ flowchart TD
     J --> K
 ```
 
+### 5.1 Subsystem Decomposition
+1. **Data Ingestion & Pipeline Subsystem (`data-pipeline/`)**:
+   - **Meteorological Collector**: Polls Open-Meteo REST endpoints at 15-minute intervals for precipitation depth, intensity, and forecast vectors.
+   - **Geospatial Extractor**: Queries OpenStreetMap via Overpass API to download highway lines and storm drainage conduits.
+   - **Topographic Processor**: Clips Copernicus 30m DEM raster tiles to municipal bounds and extracts cell-level terrain features.
+2. **AI/ML Modeling & Inference Engine (`ai/`)**:
+   - Computes hydrological and terrain feature vectors per spatial cell.
+   - Executes pre-trained, cross-validated **XGBoost** classifiers serialized with Joblib.
+   - Returns calibrated flood susceptibility probabilities $P \in [0.0, 1.0]$.
+3. **Core Backend Service Tier (`backend/app/`)**:
+   - Built on **FastAPI** using asynchronous I/O (`async`/`await`).
+   - Serves high-throughput endpoints for risk scoring, GeoJSON map layers, alerts, and routing.
+   - Persists state in **PostgreSQL + PostGIS** (with SQLite fallback for local developer setups).
+4. **Safe Routing Subsystem (`routing/`)**:
+   - Models the road network as a directional graph using NetworkX and OSMnx.
+   - Penalizes edge weights dynamically based on intersecting flood risk polygons.
+5. **Presentation Tier (`frontend/`)**:
+   - Single Page Application built on **React 18** and **Vite** styled with **Tailwind CSS**.
+   - Renders vector layers and raster basemaps via **Leaflet** and **React-Leaflet**.
+   - Includes Service Worker and IndexedDB caching for offline resilience.
+
 ---
 
-## 6. Working Flow
+## 6. Working Workflow & User Journeys
 
-1. **Scheduled Ingestion**: The data pipeline polls meteorological APIs (Open-Meteo) at configurable intervals (15–30 minutes).
-2. **Feature Harmonization**: Incoming rainfall values are joined with static geospatial features (DEM elevation, slope, flow accumulation, distance to drains) per spatial cell.
-3. **ML Inference**: The feature vector is passed to the trained XGBoost model to calculate a flood susceptibility probability $P(\text{Flood})$.
-4. **Risk Classification**: The probability is mapped to one of four calibrated hazard tiers: Low, Moderate, High, or Critical.
-5. **Geospatial Layer Generation**: Inundated zone polygons and road hazard states are updated and formatted into GeoJSON.
-6. **Route Penalization**: Road network edge weights are dynamically scaled by flood probability, preventing navigation paths from routing through hazard zones.
-7. **Client Delivery**: The React client consumes updated risk layers, renders maps via Leaflet, triggers alert banners, and caches emergency layers for offline resilience.
+<p align="center">
+  <img src="docs/diagrams/working-flow.svg" alt="UrbanFlood AI Working Flow Architecture" width="550"/>
+</p>
+<p align="center">
+  <em>UrbanFlood AI End-to-End Operational Workflow: From meteorological ingestion to flood decision engine, early warning alerts, and offline access.</em>
+</p>
+
+```mermaid
+flowchart TD
+    Start([System Active / Scheduled Poll]) --> S1[Fetch Real-Time & Forecast Precipitation]
+    S1 --> S2[Lookup Spatial Context: Elevation, Slope, Drainage Buffer]
+    S2 --> S3[Construct Geospatial Feature Vectors per Grid Cell]
+    S3 --> S4[Run ML Model: Predict Flood Probability]
+    S4 --> S5{Evaluate Against Risk Thresholds}
+    
+    S5 -- "Probability < 0.30" --> Low[LOW RISK: Safe Green Zone]
+    S5 -- "0.30 <= Prob < 0.60" --> Mod[MODERATE RISK: Water Logging Advisory]
+    S5 -- "0.60 <= Prob < 0.85" --> High[HIGH RISK: Inundation Warning]
+    S5 -- "Prob >= 0.85" --> Crit[CRITICAL RISK: Flash Flood Flash Alert]
+
+    Low --> UpdateMap[Update Dynamic Map Layers]
+    Mod --> UpdateMap
+    High --> TriggerAlerts[Generate Early Warning Alerts]
+    Crit --> TriggerAlerts
+    TriggerAlerts --> UpdateMap
+
+    UpdateMap --> Routing[Penalize Inundated Road Segments in Routing Graph]
+    Routing --> DeliverClient[Deliver Updates to Citizen & Admin Dashboards]
+    DeliverClient --> CachePWA[Cache Risk Snapshot for Offline PWA Access]
+```
+
+### 6.1 Citizen Journey
+1. **Access**: Citizen opens the Progressive Web App (PWA) on mobile or desktop.
+2. **Geolocate**: System queries browser GNSS coordinates or accepts a manual neighborhood search.
+3. **Perception**: Map immediately highlights current hazard level (e.g. 🟡 MODERATE or 🟠 HIGH) with localized advisories.
+4. **Navigation**: Citizen inputs an evacuation shelter or destination; the routing engine generates a safe route avoiding all High and Critical water accumulation zones.
+5. **Offline Fallback**: If cellular towers fail, cached map tiles and emergency shelter phone directories remain accessible.
+
+### 6.2 Municipal Administrator Journey
+1. **Command Center**: Real-time overview of all administrative wards with aggregate risk indicators.
+2. **Infrastructure Triage**: Identifies key municipal assets (hospitals, power substations, fire stations) intersecting active flood polygons.
+3. **Alert Dispatch**: Approves and broadcasts CAP-compliant emergency civil alerts to citizen mobile devices.
+4. **Post-Event Audit**: Analyzes historical rainfall vs model predictions to calibrate future threshold settings.
 
 ---
 
-## 7. AI/ML Approach
+## 7. Data Flow & Transformation Pipeline
 
-### 7.1 Input Features
-* **`rainfall_1h_mm`**: Observed rainfall during the past hour.
-* **`rainfall_3h_mm`**: Short-term antecedent precipitation.
-* **`forecast_rainfall_next_3h_mm`**: Forward-looking precipitation forecast.
-* **`elevation_m`**: Height above sea level (Copernicus 30m DEM).
-* **`slope_deg`**: Terrain gradient calculated via first-order spatial derivatives.
-* **`distance_to_drain_m`**: Distance to nearest stormwater canal or conduit.
-* **`impervious_surface_ratio`**: Urban land cover fraction (impermeable surface).
-* **`historical_flood_count`**: Frequency of verified historical flooding events in the zone.
+```mermaid
+sequenceDiagram
+    autonumber
+    participant Ext as External APIs (Open-Meteo / OSM)
+    participant Pipe as Data Ingestion Pipeline
+    participant DB as PostGIS / Cache
+    participant AI as ML Inference Engine
+    participant API as FastAPI Backend
+    participant Client as React Dashboard / PWA
 
-### 7.2 Processing Pipeline
-$$\text{Data Cleaning} \longrightarrow \text{Spatial Imputation} \longrightarrow \text{Feature Engineering} \longrightarrow \text{Standardization} \longrightarrow \text{Model Evaluation} \longrightarrow \text{Probability Calibration}$$
+    %% Periodic Flow
+    loop Every 15 Minutes
+        Pipe->>Ext: Poll Hourly/Current Precipitation & Radar
+        Ext-->>Pipe: Precipitation (mm/hr), Cloud Cover, Wind
+        Pipe->>Pipe: Clean, Normalize & Impute Missing Readings
+        Pipe->>DB: Upsert Weather Observations & Time-Series
+    end
 
-### 7.3 Model Selection & Training
-* **Algorithm**: Gradient Boosted Trees (XGBoost / LightGBM) and Scikit-learn Random Forest baseline.
-* **Loss Function**: Binary Cross-Entropy with class-weight rebalancing for rare flood events.
-* **Artifacts**: Serialized model estimators and feature scalers stored in `ai/models/saved/` via Joblib.
+    %% User Request Flow
+    Client->>API: GET /api/v1/flood-risk?lat=19.07&lng=72.87
+    API->>DB: Fetch Latest Precipitation & Precomputed Terrain Attributes
+    DB-->>API: Elevation, Slope, Distance to Drain, Current Rain
+    API->>AI: Predict Risk(Features Vector)
+    AI-->>API: Risk Score (0.78), Category: HIGH
+    API-->>Client: JSON Response (Risk, Thresholds, Safety Advisories)
+
+    %% Route Request Flow
+    Client->>API: POST /api/v1/safe-route (Origin, Destination)
+    API->>DB: Fetch Road Network Graph + Overlay Current Risk Polygons
+    API->>API: Compute Dynamic Edge Weights (Length + Inundation Penalty)
+    API->>API: Execute Safe Path Algorithm (A*)
+    API-->>Client: GeoJSON Safe Route MultiLineString + Waypoints
+```
+
+### 7.1 Ingestion & Transformation Matrix
+
+| Phase | Input Source | Primary Tools | Transformation Process | Destination |
+| :--- | :--- | :--- | :--- | :--- |
+| **Meteorological** | Open-Meteo REST API | `httpx`, `pandas` | Aggregate 1-hr, 3-hr, 6-hr, 24-hr antecedent precipitation totals | Memory Cache / PostgreSQL |
+| **Topographical** | Copernicus 30m DEM | `rasterio`, `numpy` | Calculate Slope ($\theta$), Aspect, Curvature, and Flow Accumulation | GeoTIFF raster & pre-gridded centroid features |
+| **Infrastructural** | OpenStreetMap Overpass | `osmnx`, `shapely` | Extract storm water drains, river channels, and road networks | GeoJSON layers & NetworkX graph |
+| **Feature Vector** | Joined spatial attributes | `scikit-learn` | MinMax / StandardScaler normalization & categorical encoding | XGBoost DMatrix format for inference |
+
+---
+
+## 8. AI/ML Approach
+
+### 8.1 Input Feature Definitions
+1. **`rainfall_1h_mm`**: Observed rainfall depth over the preceding 60 minutes.
+2. **`rainfall_3h_mm`**: Short-term antecedent precipitation indicating soil saturation.
+3. **`forecast_rainfall_next_3h_mm`**: Forward-looking convective precipitation forecast.
+4. **`elevation_m`**: Orthometric height above mean sea level extracted from the DEM.
+5. **`slope_deg`**: Topographic gradient; lower slopes impede natural gravity runoff:
+   $$\text{Slope} = \arctan\left(\sqrt{\left(\frac{\partial z}{\partial x}\right)^2 + \left(\frac{\partial z}{\partial y}\right)^2}\right) \times \frac{180}{\pi}$$
+6. **`distance_to_drain_m`**: Euclidean distance to the nearest mapped stormwater canal or culvert.
+7. **`impervious_surface_ratio`**: Fraction of ground covered by paved roads, concrete, or buildings ($0.0 \le I \le 1.0$).
+8. **`historical_flood_count`**: Frequency of verified historical flooding events in the grid cell.
+
+### 8.2 Processing Pipeline
+$$\text{Raw Ingestion} \longrightarrow \text{Spatial Imputation} \longrightarrow \text{Feature Engineering} \longrightarrow \text{Standardization} \longrightarrow \text{Model Evaluation} \longrightarrow \text{Probability Calibration}$$
+
+### 8.3 Model Architecture & Training
+* **Primary Classifier**: Gradient Boosted Decision Trees (**XGBoost**) optimized with binary logistic loss.
+* **Baseline Benchmark**: Scikit-learn Random Forest Classifier.
+* **Handling Class Imbalance**: Rebalancing via `scale_pos_weight` to account for the rarity of extreme flooding events.
+* **Calibration**: Isotonic Regression / Platt Scaling applied to map model logits into reliable empirical probabilities $P(\text{Flood} \mid X)$.
+* **Serialization**: Saved via Joblib to `ai/models/saved/xgboost_flood_model_latest.joblib`.
 
 > [!NOTE]
 > **Validation Notice**: ML models in this repository provide statistical susceptibility estimates based on available open datasets. Outputs must be empirically calibrated and validated against ground-truth municipal rain gauges and historical flood water-mark records before operational life-safety deployment.
 
 ---
 
-## 8. GIS & Mapping
+## 9. GIS, Cartography & Spatial Subsystems
 
-The spatial architecture leverages open standards and open data formats:
-* **Digital Elevation Models (DEM)**: Copernicus GLO-30 raster tiles clipped and processed using `Rasterio` and `NumPy` to derive slope, flow accumulation, and topographic wetness index (TWI).
-* **Road & Drainage Graph**: Extracted from OpenStreetMap (OSM) through Overpass API queries, represented as a topological graph for vehicle and pedestrian traversal.
-* **Map Projection**: All geospatial vector geometries are standardized to EPSG:4326 (WGS84) for web delivery and projected to local UTM zones for metric distance calculations.
-* **Cartographic Visualization**: Leaflet / React-Leaflet with custom vector tile styling, dynamic opacity controls, and responsive marker clustering.
+* **Digital Elevation Models (DEM)**: Copernicus GLO-30 30-meter global raster tiles processed via `Rasterio` and `NumPy` to derive slope, aspect, and flow accumulation.
+* **Road & Drainage Graph**: Extracted from OpenStreetMap (OSM) through Overpass API queries, represented as a topological network graph for routing.
+* **Map Projection & CRS**: Vector geometries are standardized to **EPSG:4326** (WGS84) for web delivery and projected to local UTM zones (e.g. EPSG:32643) for metric distance and buffer calculations.
+* **Vector Tiling**: Dynamic GeoJSON layers served directly to Leaflet, with client-side styling based on risk tiers.
 
 ---
 
-## 9. Data Sources
+## 10. Data Sources & Feature Extraction Schema
 
 | Data Category | Source Provider | Primary Purpose | Official Source Link |
 | :--- | :--- | :--- | :--- |
@@ -204,20 +323,32 @@ The spatial architecture leverages open standards and open data formats:
 
 ---
 
-## 10. Technology Stack
+## 11. Safe Routing Engine & Hazard Avoidance
 
-* **Frontend**: React 18, Vite, Tailwind CSS, Leaflet, React-Leaflet, Lucide Icons, Axios
-* **Backend API**: Python 3.11, FastAPI, Pydantic v2, SQLAlchemy 2.0 (Async), Uvicorn
-* **AI / Machine Learning**: Scikit-learn, XGBoost, Pandas, NumPy, SciPy, Joblib
-* **GIS & Geospatial**: GeoPandas, Shapely, Rasterio, NetworkX, OSMnx
-* **Database & Persistence**: PostgreSQL with PostGIS extension (SQLite fallback for local prototyping)
-* **DevOps & Infrastructure**: Docker, Docker Compose, GitHub Actions, Vercel (Frontend), Render / Railway (Backend)
+Urban road navigation during floods requires avoiding water depth rather than just traffic congestion. UrbanFlood AI models the street grid as a directed weighted graph $G = (V, E)$ where vertices $V$ represent street intersections and edges $E$ represent road segments.
+
+### 11.1 Dynamic Cost Formulation
+For each road edge $e \in E$, the traversal cost is calculated dynamically:
+
+$$\text{Cost}(e) = \text{Length}(e) \times \left(1 + \alpha \cdot P_{\text{flood}}(e)\right) + \beta \cdot \text{Depth}_{\text{est}}(e)$$
+
+Where:
+* $\text{Length}(e)$: Geometric road segment length in meters.
+* $P_{\text{flood}}(e)$: Predicted flood susceptibility probability ($0.0 \le P \le 1.0$).
+* $\text{Depth}_{\text{est}}(e)$: Estimated water depth in centimeters based on depression sinks.
+* $\alpha$: Risk penalty scaling factor (default: $3.0$).
+* $\beta$: Depth penalty factor (default: $5.0$).
+
+### 11.2 Critical Hazard Pruning
+If an edge $e$ traverses a zone classified as **CRITICAL** ($P \ge 0.85$ or water depth $> 30\text{ cm}$), its weight is set to infinity:
+$$\text{Cost}(e) = \infty$$
+This mathematically guarantees that Dijkstra or A* pathfinding will never route vehicles or pedestrians through impassable underpasses or lethal flash-flood corridors.
 
 ---
 
-## 11. Project Structure
+## 12. Complete Monorepo Project Structure
 
-```
+```text
 UrbanFlood-AI/
 ├── README.md                           # Master Project Documentation
 ├── LICENSE                             # MIT Open-Source License
@@ -336,6 +467,7 @@ UrbanFlood-AI/
 │
 ├── scripts/                            # Operational & Seeding Scripts
 │   ├── setup.sh                        # Rapid Development Setup Automation
+│   ├── touch_gitkeeps.ps1              # Monorepo directory verification
 │   ├── seed_database.py                # Initial Database Seeding
 │   └── download_datasets.py            # Open Dataset Downloader
 │
@@ -348,16 +480,27 @@ UrbanFlood-AI/
 
 ---
 
-## 12. Installation
+## 13. Technology Stack
 
-### 12.1 Prerequisites
+* **Frontend**: React 18, Vite, Tailwind CSS, Leaflet, React-Leaflet, Lucide Icons, Axios
+* **Backend API**: Python 3.11, FastAPI, Pydantic v2, SQLAlchemy 2.0 (Async), Uvicorn
+* **AI / Machine Learning**: Scikit-learn, XGBoost, Pandas, NumPy, SciPy, Joblib
+* **GIS & Geospatial**: GeoPandas, Shapely, Rasterio, NetworkX, OSMnx
+* **Database & Persistence**: PostgreSQL with PostGIS extension (SQLite fallback for local development)
+* **DevOps & Infrastructure**: Docker, Docker Compose, GitHub Actions, Vercel (Frontend), Render / Railway (Backend)
+
+---
+
+## 14. Installation & Rapid Setup
+
+### 14.1 Prerequisites
 * **Git** installed
 * **Node.js** (v18.x or higher) and **npm**
 * **Python** (v3.10 or v3.11 recommended)
 * **GDAL & GEOS** libraries (for geospatial Python packages like GeoPandas)
 * *Optional*: Docker & Docker Compose for containerized execution
 
-### 12.2 Step-by-Step Setup
+### 14.2 Step-by-Step Setup
 
 ```bash
 # 1. Clone the repository
@@ -389,46 +532,53 @@ npm install
 cd ..
 ```
 
----
-
-## 13. Environment Variables
-
-UrbanFlood AI uses environment variables for clean configuration management across environments. A ready-to-use template is maintained in [`.env.example`](.env.example).
-
-| Variable Name | Description | Default / Example |
-| :--- | :--- | :--- |
-| `ENVIRONMENT` | Application operational mode | `development` / `production` |
-| `DATABASE_URL` | PostgreSQL/PostGIS connection string (or SQLite) | `postgresql+asyncpg://postgres:postgres@localhost:5432/urbanflood_db` |
-| `POSTGIS_ENABLED` | Toggle PostGIS geospatial query engine | `true` |
-| `OPEN_METEO_BASE_URL` | Base endpoint for weather nowcasting | `https://api.open-meteo.com/v1/forecast` |
-| `OSM_OVERPASS_URL` | OpenStreetMap Overpass API gateway | `https://overpass-api.de/api/interpreter` |
-| `MODEL_PATH` | Filepath to serialized XGBoost model artifact | `ai/models/saved/xgboost_flood_model_latest.joblib` |
-| `SECRET_KEY` | Cryptographic secret for JWT authentication | `secure-random-32-char-string` |
-| `VITE_API_BASE_URL` | Backend URL consumed by the React application | `http://localhost:8000/api/v1` |
-
-> [!WARNING]
-> Never commit active credentials, production database passwords, or JWT secrets to public repositories. Always maintain secrets securely in hosting environment managers (e.g., Vercel, Render, or Docker secrets).
+### 14.3 Automated Setup Script
+On Linux, macOS, or Windows WSL, you can initialize the entire environment in a single command:
+```bash
+chmod +x scripts/setup.sh
+./scripts/setup.sh
+```
 
 ---
 
-## 14. Running the Project
+## 15. Environment Variables Matrix
+
+A ready-to-use template is maintained in [`.env.example`](.env.example):
+
+| Variable Name | Required | Default Value | Description |
+| :--- | :---: | :--- | :--- |
+| `ENVIRONMENT` | Yes | `development` | Operational mode (`development`, `staging`, `production`) |
+| `DEBUG` | No | `true` | Enables verbose FastAPI logging and reload features |
+| `SECRET_KEY` | Yes | *Auto-generated* | Cryptographic secret for signing JWT admin tokens |
+| `DATABASE_URL` | Yes | `postgresql+asyncpg://...` | Asynchronous connection string for PostgreSQL/PostGIS |
+| `POSTGIS_ENABLED` | No | `false` | Enables spatial PostGIS extension queries |
+| `OPEN_METEO_BASE_URL` | Yes | `https://api.open-meteo.com/v1/forecast` | Meteorological nowcasting REST endpoint |
+| `OSM_OVERPASS_URL` | Yes | `https://overpass-api.de/api/interpreter` | OpenStreetMap Overpass query endpoint |
+| `MODEL_PATH` | Yes | `ai/models/saved/xgboost_flood_model_latest.joblib` | Filepath to serialized XGBoost model |
+| `RISK_THRESHOLD_MODERATE` | No | `0.30` | Minimum probability cutoff for Moderate risk |
+| `RISK_THRESHOLD_HIGH` | No | `0.60` | Minimum probability cutoff for High risk |
+| `RISK_THRESHOLD_CRITICAL` | No | `0.85` | Minimum probability cutoff for Critical risk |
+| `VITE_API_BASE_URL` | Yes | `http://localhost:8000/api/v1` | Backend URL consumed by the React application |
+
+---
+
+## 16. Running the Project
 
 ### Option A: Local Development (Native)
 
 1. **Start the FastAPI Backend Service**:
    ```bash
-   # From repository root with virtual environment activated:
    uvicorn backend.app.main:app --host 127.0.0.1 --port 8000 --reload
    ```
-   * The API and Swagger documentation will be accessible at: `http://localhost:8000/docs`
+   * Swagger Documentation: `http://localhost:8000/docs`
+   * Redoc Documentation: `http://localhost:8000/redoc`
 
 2. **Start the React Frontend Application**:
    ```bash
-   # Open a new terminal window:
    cd frontend
    npm run dev
    ```
-   * The frontend dashboard will launch at: `http://localhost:5173`
+   * Frontend Application: `http://localhost:5173`
 
 ### Option B: Containerized Execution (Docker Compose)
 
@@ -439,16 +589,17 @@ docker-compose -f docker-compose.dev.yml up --build
 
 ---
 
-## 15. API Overview
+## 17. Exhaustive API Documentation
 
-All routes are served under the versioned prefix `/api/v1`. Detailed schemas are available in [docs/api/api-documentation.md](docs/api/api-documentation.md).
+All REST routes are served under the versioned prefix `/api/v1`.
 
 ### 1. System Health Check
 * **Endpoint**: `GET /health`
 * **Status**: **Implemented**
 * **Purpose**: Verifies backend service status, database connectivity, and ML model availability.
+* **Authentication**: None
 * **Example Request**: `GET /api/v1/health`
-* **Example Response**:
+* **Example Response (200 OK)**:
   ```json
   {
     "status": "healthy",
@@ -462,13 +613,17 @@ All routes are served under the versioned prefix `/api/v1`. Detailed schemas are
   }
   ```
 
+---
+
 ### 2. Meteorological Nowcasting
 * **Endpoint**: `GET /weather`
 * **Status**: **Implemented**
-* **Purpose**: Fetches real-time precipitation, intensity, and next-6h forecast for a latitude/longitude pair.
-* **Parameters**: `lat` (float, query), `lng` (float, query)
+* **Purpose**: Fetches real-time precipitation, intensity, and next-6h forecast for a latitude/longitude coordinate pair.
+* **Query Parameters**:
+  - `lat` (float, required): Latitude in decimal degrees (e.g. `19.0760`)
+  - `lng` (float, required): Longitude in decimal degrees (e.g. `72.8777`)
 * **Example Request**: `GET /api/v1/weather?lat=19.0760&lng=72.8777`
-* **Example Response**:
+* **Example Response (200 OK)**:
   ```json
   {
     "latitude": 19.0760,
@@ -476,38 +631,60 @@ All routes are served under the versioned prefix `/api/v1`. Detailed schemas are
     "current": {
       "precipitation_mm": 38.5,
       "precipitation_intensity_mm_per_hr": 24.2,
+      "temperature_celsius": 28.4,
+      "humidity_percent": 94,
       "condition": "Heavy Rain"
     },
     "forecast_next_6h": [
       {"hour": 1, "predicted_rainfall_mm": 22.0},
-      {"hour": 2, "predicted_rainfall_mm": 18.5}
+      {"hour": 2, "predicted_rainfall_mm": 18.5},
+      {"hour": 3, "predicted_rainfall_mm": 9.0},
+      {"hour": 4, "predicted_rainfall_mm": 4.2},
+      {"hour": 5, "predicted_rainfall_mm": 2.0},
+      {"hour": 6, "predicted_rainfall_mm": 1.0}
     ]
   }
   ```
 
+---
+
 ### 3. Localized Flood Risk Assessment
 * **Endpoint**: `GET /flood-risk`
 * **Status**: **Implemented**
-* **Purpose**: Returns computed flood susceptibility score, risk level, and contributing factor weights.
-* **Parameters**: `lat` (float, query), `lng` (float, query)
+* **Purpose**: Evaluates point flood susceptibility probability, hazard level, and contributing topographical factors.
+* **Query Parameters**:
+  - `lat` (float, required): Latitude
+  - `lng` (float, required): Longitude
 * **Example Request**: `GET /api/v1/flood-risk?lat=19.0760&lng=72.8777`
-* **Example Response**:
+* **Example Response (200 OK)**:
   ```json
   {
     "coordinates": {"lat": 19.0760, "lng": 72.8777},
     "risk_score": 0.76,
     "risk_level": "HIGH",
-    "advisory": "Hazardous road inundation likely. Low-lying movement discouraged."
+    "risk_color": "#ea580c",
+    "factors": {
+      "rainfall_intensity_score": 0.85,
+      "elevation_meters": 8.2,
+      "slope_degrees": 1.1,
+      "distance_to_drain_meters": 320.0,
+      "drainage_congestion_index": 0.72
+    },
+    "advisory": "Hazardous road inundation likely. Pedestrian and low-vehicle movement discouraged."
   }
   ```
+
+---
 
 ### 4. Dynamic Flood Risk Map
 * **Endpoint**: `GET /flood-map`
 * **Status**: **Implemented**
-* **Purpose**: Streams active flood risk zones as a GeoJSON FeatureCollection.
-* **Parameters**: `bbox` (string, optional: `min_lng,min_lat,max_lng,max_lat`), `min_risk` (string, optional)
-* **Example Request**: `GET /api/v1/flood-map?min_risk=MODERATE`
-* **Example Response**:
+* **Purpose**: Streams active flood risk zones formatted as a standard GeoJSON FeatureCollection for Leaflet rendering.
+* **Query Parameters**:
+  - `bbox` (string, optional): Bounding box filter `min_lng,min_lat,max_lng,max_lat`
+  - `min_risk` (string, optional): Filter by minimum risk (`LOW`, `MODERATE`, `HIGH`, `CRITICAL`)
+* **Example Request**: `GET /api/v1/flood-map?bbox=72.82,18.98,72.95,19.15&min_risk=MODERATE`
+* **Example Response (200 OK)**:
   ```json
   {
     "type": "FeatureCollection",
@@ -520,28 +697,33 @@ All routes are served under the versioned prefix `/api/v1`. Detailed schemas are
         },
         "properties": {
           "zone_id": "ZN-401",
+          "ward": "F-North",
           "risk_level": "CRITICAL",
           "risk_score": 0.89,
-          "water_depth_cm_est": 45.0
+          "water_depth_cm_est": 45.0,
+          "updated_at": "2026-09-19T12:15:00Z"
         }
       }
     ]
   }
   ```
 
+---
+
 ### 5. Hazard-Evading Safe Route
 * **Endpoint**: `POST /safe-route`
 * **Status**: **Implemented**
-* **Purpose**: Calculates shortest topological route penalized by predicted inundation zones.
+* **Purpose**: Computes safe navigation paths circumventing active flood zones and low-elevation underpasses.
 * **Request Body**:
   ```json
   {
     "origin": {"lat": 19.0700, "lng": 72.8700},
     "destination": {"lat": 19.1100, "lng": 72.8900},
+    "mode": "driving",
     "avoid_risk_levels": ["HIGH", "CRITICAL"]
   }
   ```
-* **Example Response**:
+* **Example Response (200 OK)**:
   ```json
   {
     "status": "success",
@@ -551,20 +733,34 @@ All routes are served under the versioned prefix `/api/v1`. Detailed schemas are
       "max_encountered_risk": "MODERATE",
       "geometry": {
         "type": "LineString",
-        "coordinates": [[72.8700, 19.0700], [72.8735, 19.0780], [72.8900, 19.1100]]
-      }
+        "coordinates": [
+          [72.8700, 19.0700],
+          [72.8735, 19.0780],
+          [72.8820, 19.0950],
+          [72.8900, 19.1100]
+        ]
+      },
+      "segments": [
+        {"instruction": "Head north on Elevated Expressway", "risk": "LOW", "distance_m": 2300},
+        {"instruction": "Turn right onto Ridge Road", "risk": "MODERATE", "distance_m": 3540}
+      ]
     },
     "rerouted_due_to_hazard": true
   }
   ```
 
+---
+
 ### 6. Early Warning Civil Alerts
 * **Endpoint**: `GET /alerts`
 * **Status**: **Implemented**
-* **Purpose**: Retrieves active civil flood alerts within a region.
-* **Parameters**: `lat` (float, optional), `lng` (float, optional), `status` (string, default: `active`)
+* **Purpose**: Retrieves active civil flood warnings, advisories, and nearby relief shelter points.
+* **Query Parameters**:
+  - `lat` (float, optional): Latitude to filter proximal alerts
+  - `lng` (float, optional): Longitude to filter proximal alerts
+  - `status` (string, optional): `active` or `resolved` (default: `active`)
 * **Example Request**: `GET /api/v1/alerts?lat=19.0760&lng=72.8777`
-* **Example Response**:
+* **Example Response (200 OK)**:
   ```json
   {
     "count": 1,
@@ -572,43 +768,58 @@ All routes are served under the versioned prefix `/api/v1`. Detailed schemas are
       {
         "id": "ALT-20260919-002",
         "severity": "CRITICAL",
-        "headline": "Severe Inundation Alert: Hindmata Junction",
-        "message": "Water accumulation exceeding 40cm. Subway closed. Avoid travel.",
-        "issued_at": "2026-09-19T11:45:00Z"
+        "headline": "Severe Inundation Alert: Hindmata & Gandhi Market Junctions",
+        "message": "Water accumulation exceeding 40cm. Subway closed. Avoid all non-essential travel.",
+        "issued_at": "2026-09-19T11:45:00Z",
+        "expires_at": "2026-09-19T15:00:00Z",
+        "affected_zones": ["ZN-401", "ZN-405"],
+        "emergency_shelter": {
+          "name": "Community Civic Center Ward F",
+          "distance_km": 1.2,
+          "contact": "+91-22-2410-0000"
+        }
       }
     ]
   }
   ```
 
+---
+
 ### 7. Direct Machine Learning Inference
 * **Endpoint**: `POST /prediction`
 * **Status**: **Planned / In-Progress**
-* **Purpose**: Direct evaluation of arbitrary feature vectors for batch scoring and pipeline auditing.
+* **Purpose**: Batch evaluation and automated testing of arbitrary raw feature vectors.
 * **Request Body**:
   ```json
   {
     "rainfall_1h_mm": 42.0,
     "rainfall_3h_mm": 78.5,
+    "rainfall_24h_mm": 130.0,
     "elevation_m": 6.5,
     "slope_deg": 0.8,
     "distance_to_drain_m": 450.0,
-    "impervious_surface_ratio": 0.88
+    "impervious_surface_ratio": 0.88,
+    "historical_flood_count": 5
   }
   ```
-* **Example Response**:
+* **Example Response (200 OK)**:
   ```json
   {
     "flood_probability": 0.824,
     "risk_category": "HIGH",
+    "feature_importances": {
+      "rainfall_1h_mm": 0.41,
+      "elevation_m": 0.28,
+      "distance_to_drain_m": 0.18,
+      "impervious_surface_ratio": 0.13
+    },
     "model_version": "1.0.0"
   }
   ```
 
 ---
 
-## 16. Flood Risk Levels
-
-UrbanFlood AI categorizes predicted flood risk into four standardized hazard tiers:
+## 18. Flood Risk Classification
 
 | Tier | Category | Risk Score ($P$) | Impact & Physical Manifestation | Recommended Operational Action |
 | :---: | :--- | :---: | :--- | :--- |
@@ -622,9 +833,9 @@ UrbanFlood AI categorizes predicted flood risk into four standardized hazard tie
 
 ---
 
-## 17. Offline/Low-Connectivity Strategy
+## 19. Offline & Low-Connectivity Strategy
 
-During severe weather events, mobile cellular base stations and power infrastructure frequently suffer degradation. UrbanFlood AI implements a graceful degradation architecture:
+During severe weather events, cellular base stations and electrical grids frequently suffer brownouts and physical failures. UrbanFlood AI implements a graceful degradation architecture:
 
 ```
 Cloud / Server Cluster
@@ -639,21 +850,21 @@ Offline Progressive Web App (PWA) Execution
          └── Local Geolocation Hazard Lookups
 ```
 
-### 17.1 Client-Side Offline Resilience
-* **Service Worker Caching**: All frontend JavaScript, CSS, and base Leaflet map tiles for the selected city are cached locally.
+### 19.1 Client-Side Offline Resilience
+* **Service Worker Caching**: All frontend JavaScript, CSS bundles, and base Leaflet map tiles for the selected city are cached locally.
 * **IndexedDB Snapshotting**: The most recent valid `/flood-map` GeoJSON payload and active `/alerts` are preserved locally on the client device.
 * **Device GPS Independence**: HTML5 Geolocation operates through satellite GNSS signals, enabling users to view their position relative to the cached flood polygon map even when 4G/5G internet is intermittent.
 
-### 17.2 Future Integration Possibilities (Planned)
+### 19.2 Future Integration Possibilities (Planned)
 * **SMS & Cell Broadcast**: Integration with government emergency broadcasting for zero-data push delivery.
 * **LoRaWAN Meshes**: Hyper-localized solar-powered community gateways relaying water-level telemetry to edge display boards.
 * **Community Offline Kiosks**: Raspberry Pi-based local Wi-Fi captive portals installed at designated disaster relief shelters.
 
 ---
 
-## 18. Security
+## 20. Security & Data Protection
 
-UrbanFlood AI adheres to modern security and data protection standards:
+UrbanFlood AI adheres to modern web and spatial security standards:
 
 * **Environment Variable Isolation**: Zero secrets, database passwords, or private tokens committed to version control; strict enforcement of `.gitignore` and `.env.example`.
 * **Robust Input Validation**: Strict validation on all incoming query and body parameters via Pydantic schemas, mitigating injection vectors.
@@ -664,19 +875,17 @@ UrbanFlood AI adheres to modern security and data protection standards:
 
 ---
 
-## 19. Testing
+## 21. Testing Strategy
 
-The repository incorporates automated testing suites across each tier:
-
-* **Frontend Unit & Component Testing**: Vitest and React Testing Library verifying UI state updates, map layer mounting, and offline fallback rendering.
+* **Frontend Unit & Component Testing**: Vitest and React Testing Library verifying UI state updates, map layer mounting, and offline fallback rendering:
   ```bash
   cd frontend && npm run test
   ```
-* **Backend API Integration Testing**: Pytest testing REST endpoints, schema validation, and database queries.
+* **Backend API Integration Testing**: Pytest testing REST endpoints, schema validation, and database queries:
   ```bash
   pytest backend/tests/
   ```
-* **AI/ML Model Validation**: Regression tests verifying deterministic output ranges ($0.0 \le P \le 1.0$) and preventing feature drift.
+* **AI/ML Model Validation**: Regression tests verifying deterministic output ranges ($0.0 \le P \le 1.0$) and preventing feature drift:
   ```bash
   python ai/models/evaluate.py --data ai/data/processed/test_features.csv
   ```
@@ -684,7 +893,45 @@ The repository incorporates automated testing suites across each tier:
 
 ---
 
-## 20. Future Scope
+## 22. 10-Phase Development Roadmap
+
+| Phase | Title | Classification | Key Deliverables & Milestones |
+| :---: | :--- | :---: | :--- |
+| **Phase 1** | **Project Setup & Base UI** | **MVP** | Monorepo structure, Docker configuration, Vite + React layout, Leaflet base layer, Tailwind dark mode. |
+| **Phase 2** | **Weather API Ingestion** | **MVP** | Open-Meteo polling client, 15-minute scheduled cache, precipitation normalization, `/api/v1/weather`. |
+| **Phase 3** | **GIS & Elevation Processing** | **MVP** | Copernicus 30m DEM clipping, slope calculation, OSM road/drain extraction, GeoJSON boundary generation. |
+| **Phase 4** | **Data Pipeline & Feature Store** | **MVP** | Spatial join of weather to DEM cells, feature normalization pipeline, data hygiene sanity checks. |
+| **Phase 5** | **Machine Learning Model** | **MVP** | Baseline XGBoost flood risk classifier, cross-validation on historical data, Joblib serialization, `/api/v1/prediction`. |
+| **Phase 6** | **Interactive Flood Risk Map** | **MVP** | GeoJSON vector streaming `/api/v1/flood-map`, dynamic Leaflet choropleth coloring, popup hazard factors. |
+| **Phase 7** | **Safe Routing Engine** | **Production** | Topological OSM road graph parsing, flood risk penalty cost function, A* safe-route solver, `/api/v1/safe-route`. |
+| **Phase 8** | **Early Warning Alert System** | **Production** | Municipal threshold evaluation engine, automated civil alert generation, CAP-compliant notifications, `/api/v1/alerts`. |
+| **Phase 9** | **Offline & Low-Connectivity** | **Production** | Service Worker caching, IndexedDB map layer snapshots, GNSS navigation during outages, PWA installation. |
+| **Phase 10** | **Testing & Cloud Deployment** | **Production** | Vitest UI suite, Pytest API integration tests, Vercel frontend CI/CD, Render backend deployment, GitHub Actions. |
+
+---
+
+## 23. Recommended First Files to Create
+
+To implement the functional MVP smoothly, create the following core files in order:
+
+### Priority 1: Core Backend Configuration & Weather Service
+1. `backend/app/core/config.py`: Pydantic Settings class parsing `.env` parameters (Open-Meteo URL, database connection, secret keys).
+2. `backend/app/services/weather_service.py`: Async HTTP service querying Open-Meteo with in-memory TTL caching to prevent rate-limit throttling.
+3. `backend/app/api/routes/weather.py`: REST route exposing `GET /api/v1/weather?lat=...&lng=...`.
+
+### Priority 2: AI Feature Processing & Mock/Baseline Predictor
+4. `ai/preprocessing/rainfall.py`: Derives 1-hour, 3-hour, and 24-hour antecedent rainfall features from raw weather time-series.
+5. `ai/models/predict.py`: Inference wrapper class that loads the serialized model and outputs calibrated risk probabilities and hazard labels.
+6. `backend/app/api/routes/risk.py`: Route connecting the weather service and model predictor to serve `GET /api/v1/flood-risk`.
+
+### Priority 3: Interactive Frontend Map & Dashboard Shell
+7. `frontend/src/services/api.js`: Axios instance pre-configured with base URL and error handlers.
+8. `frontend/src/components/Map/FloodMap.jsx`: Leaflet map component rendering OpenStreetMap tiles, user location marker, and GeoJSON hazard overlay.
+9. `frontend/src/pages/CitizenDashboard.jsx`: Primary citizen view showing current geolocation flood risk badge, weather metrics, emergency shelter shortcuts, and the interactive map.
+
+---
+
+## 24. Future Scope
 
 The UrbanFlood AI roadmap envisions several modular expansions:
 
@@ -698,7 +945,7 @@ The UrbanFlood AI roadmap envisions several modular expansions:
 
 ---
 
-## 21. Team
+## 25. Team
 
 | Team Member | Functional Domain & Role |
 | :--- | :--- |
@@ -714,34 +961,25 @@ The UrbanFlood AI roadmap envisions several modular expansions:
 
 ---
 
-## 22. Contribution
+## 26. Contribution Guidelines
 
 Contributions from the urban planning, open-source geospatial, and software engineering communities are warmly welcomed.
 
 1. **Fork** the repository on GitHub.
-2. **Create a Feature Branch**:
-   ```bash
-   git checkout -b feature/dynamic-route-penalty
-   ```
-3. **Commit Your Changes**:
-   ```bash
-   git commit -m "feat(routing): incorporate elevation slope penalty into A* cost"
-   ```
-4. **Push to Your Branch**:
-   ```bash
-   git push origin feature/dynamic-route-penalty
-   ```
+2. **Create a Feature Branch**: `git checkout -b feature/dynamic-route-penalty`
+3. **Commit Your Changes**: `git commit -m "feat(routing): incorporate elevation slope penalty into A* cost"`
+4. **Push to Your Branch**: `git push origin feature/dynamic-route-penalty`
 5. **Open a Pull Request** detailing your changes, context, and test verification results.
 
 ---
 
-## 23. License
+## 27. License
 
 This project is licensed under the terms of the **MIT License**. See the [LICENSE](LICENSE) file for complete details.
 
 ---
 
-## 24. References
+## 28. Academic & Industry References
 
 1. **Beven, K. J., & Kirkby, M. J. (1979).** *A physically based, variable contributing area model of basin hydrology.* Hydrological Sciences Bulletin, 24(1), 43-69.
 2. **Chen, T., & Guestrin, C. (2016).** *XGBoost: A Scalable Tree Boosting System.* In Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining (pp. 785-794).
